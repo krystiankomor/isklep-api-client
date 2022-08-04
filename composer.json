@@ -1,0 +1,22 @@
+{
+    "name": "krystiankomor/iskep-api-client",
+    "description": "API Client library for isklep",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "authors": [
+        {
+            "name": "Krystian Komor",
+            "email": "krystian.komor@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {"ISklepApiClient\\": "src/"}
+    }
+}

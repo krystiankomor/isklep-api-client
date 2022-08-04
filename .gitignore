@@ -1,0 +1,8 @@
+/vendor/
+.idea
+
+composer.phar
+phpunit.phar
+*.cache
+
+main.php
