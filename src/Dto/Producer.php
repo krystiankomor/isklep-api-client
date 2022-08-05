@@ -134,7 +134,7 @@ class Producer implements JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * @return mixed[]
      */
     public function jsonSerialize(): array
     {

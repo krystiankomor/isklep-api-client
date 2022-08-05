@@ -2,7 +2,7 @@
 
 namespace Factories\Producer;
 
-use ISklepApiClient\Factories\Producer\ProducerFactory;
+use ISklepApiClient\Factory\Producer\ProducerFactory;
 use PHPUnit\Framework\TestCase;
 
 class ProducerFactoryTest extends TestCase

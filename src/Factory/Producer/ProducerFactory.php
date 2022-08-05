@@ -1,6 +1,6 @@
 <?php
 
-namespace ISklepApiClient\Factories\Producer;
+namespace ISklepApiClient\Factory\Producer;
 
 use ISklepApiClient\Dto\Producer;
 

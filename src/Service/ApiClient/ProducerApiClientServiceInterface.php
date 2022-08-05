@@ -1,13 +1,16 @@
 <?php
 
-namespace ISklepApiClient\Services\ApiClient;
+namespace ISklepApiClient\Service\ApiClient;
 
 use ISklepApiClient\Dto\Producer;
+use ISklepApiClient\Exception\HttpResponseException;
 
-interface ApiClientServiceInterface
+interface ProducerApiClientServiceInterface
 {
     /**
      * @return Producer[]
+     *
+     * @throws HttpResponseException
      */
     public function getAllProducers(): array;
 
@@ -15,6 +18,8 @@ interface ApiClientServiceInterface
      * @param Producer $producer
      *
      * @return void
+     *
+     * @throws HttpResponseException
      */
     public function postProducer(Producer $producer): void;
 }

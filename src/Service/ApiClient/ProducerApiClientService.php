@@ -1,19 +1,19 @@
 <?php
 
-namespace ISklepApiClient\Services\ApiClient;
+namespace ISklepApiClient\Service\ApiClient;
 
 use ISklepApiClient\Dto\Producer;
-use ISklepApiClient\Factories\Producer\ProducerFactoryInterface;
-use ISklepApiClient\Services\Curl\CurlServiceInterface;
+use ISklepApiClient\Factory\Producer\ProducerFactoryInterface;
+use ISklepApiClient\Service\Curl\CurlServiceInterface;
 
-class ApiClientService implements ApiClientServiceInterface
+class ProducerApiClientService extends AbstractApiClientService implements ProducerApiClientServiceInterface
 {
-    private CurlServiceInterface $curlService;
     private ProducerFactoryInterface  $producerFactory;
 
     public function __construct(CurlServiceInterface $curlService, ProducerFactoryInterface $producerFactory)
     {
-        $this->curlService = $curlService;
+        parent::__construct($curlService);
+
         $this->producerFactory = $producerFactory;
     }
 
@@ -22,13 +22,13 @@ class ApiClientService implements ApiClientServiceInterface
      */
     public function getAllProducers(): array
     {
-        $response = $this->curlService->makeGetRequest('/shop_api/v1/producers');
+        $response = $this->makeGetRequest('/shop_api/v1/producers');
 
         return array_map(
             function (array $data) {
                 return $this->producerFactory->create($data);
             },
-            json_decode($response, true)
+            json_decode($response->getBody() ?? '{}', true)
         );
     }
 
@@ -39,8 +39,6 @@ class ApiClientService implements ApiClientServiceInterface
     {
         $data = ['producer' => $producer];
 
-        $response = $this->curlService->makePostRequest('/shop_api/v1/producers', $data);
-
-        var_dump($response);
+        $this->makePostRequest('/shop_api/v1/producers', $data);
     }
 }

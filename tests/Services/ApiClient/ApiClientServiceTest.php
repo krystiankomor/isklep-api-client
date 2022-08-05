@@ -3,9 +3,10 @@
 namespace Services\ApiClient;
 
 use ISklepApiClient\Dto\Producer;
-use ISklepApiClient\Factories\Producer\ProducerFactoryInterface;
-use ISklepApiClient\Services\ApiClient\ApiClientService;
-use ISklepApiClient\Services\Curl\CurlServiceInterface;
+use ISklepApiClient\Factory\Producer\ProducerFactoryInterface;
+use ISklepApiClient\Message\Response;
+use ISklepApiClient\Service\ApiClient\ProducerApiClientService;
+use ISklepApiClient\Service\Curl\CurlServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class ApiClientServiceTest extends TestCase
@@ -14,14 +15,15 @@ class ApiClientServiceTest extends TestCase
     {
         // Arrange
         $json = '[{}, {}]';
+        $response = $this->createResponse($json);
         $producer = new Producer();
 
         $curlService = $this->createMock(CurlServiceInterface::class);
         $curlService
             ->expects($this->once())
-            ->method('makeGetRequest')
-            ->with('/shop_api/v1/producers')
-            ->willReturn($json);
+            ->method('makeRequest')
+            ->with('/shop_api/v1/producers', 'GET')
+            ->willReturn($response);
 
         $mapperService = $this->createMock(ProducerFactoryInterface::class);
         $mapperService
@@ -41,11 +43,28 @@ class ApiClientServiceTest extends TestCase
         }
     }
 
+    /**
+     * @param string $body
+     *
+     * @return Response
+     */
+    private function createResponse(string $body): Response
+    {
+        return new Response(
+            $body,
+            [
+                'http_code' => 200,
+            ],
+            '',
+            0
+        );
+    }
+
     private function getService(
         CurlServiceInterface $curlService = null,
         ProducerFactoryInterface $producerFactory = null
-    ): ApiClientService {
-        return new ApiClientService(
+    ): ProducerApiClientService {
+        return new ProducerApiClientService(
             $curlService ?? $this->createMock(CurlServiceInterface::class),
             $producerFactory ?? $this->createMock(ProducerFactoryInterface::class)
         );

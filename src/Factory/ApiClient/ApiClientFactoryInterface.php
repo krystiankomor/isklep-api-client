@@ -1,8 +1,8 @@
 <?php
 
-namespace ISklepApiClient\Factories\ApiClient;
+namespace ISklepApiClient\Factory\ApiClient;
 
-use ISklepApiClient\Services\ApiClient\ApiClientServiceInterface;
+use ISklepApiClient\Service\ApiClient\ProducerApiClientServiceInterface;
 
 interface ApiClientFactoryInterface
 {
@@ -12,12 +12,12 @@ interface ApiClientFactoryInterface
      * @param string $password
      * @param string|null $headerHost
      *
-     * @return ApiClientServiceInterface
+     * @return ProducerApiClientServiceInterface
      */
     public function create(
         string $url,
         string $login,
         string $password,
         ?string $headerHost = null
-    ): ApiClientServiceInterface;
+    ): ProducerApiClientServiceInterface;
 }

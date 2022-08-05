@@ -1,13 +1,13 @@
 <?php
 
-namespace ISklepApiClient\Factories\Producer;
+namespace ISklepApiClient\Factory\Producer;
 
 use ISklepApiClient\Dto\Producer;
 
 interface ProducerFactoryInterface
 {
     /**
-     * @param array $data
+     * @param mixed[] $data
      *
      * @return Producer
      */
