@@ -20,13 +20,13 @@ class CurlService implements CurlServiceInterface
     /**
      * {@inheritDoc}
      */
-    public function makeGetRequest(string $uri): ?string
+    public function makeGetRequest(string $path): ?string
     {
         $curl = curl_init();
         curl_setopt_array(
             $curl,
             [
-                CURLOPT_URL            => $this->url . $uri,
+                CURLOPT_URL            => $this->url . $path,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => '',
                 CURLOPT_MAXREDIRS      => 10,
@@ -67,5 +67,39 @@ class CurlService implements CurlServiceInterface
         }
 
         return $header;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function makePostRequest(string $path, array $data): ?string
+    {
+        $curl = curl_init();
+        curl_setopt_array(
+            $curl,
+            [
+                CURLOPT_URL            => $this->url . $path,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING       => '',
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => 'POST',
+                CURLOPT_HTTPHEADER     => array_merge(
+                    $this->getHeaders(),
+                    [
+                        'Content-Type:application/json',
+                    ]
+                ),
+                CURLOPT_POSTFIELDS     => json_encode($data),
+            ]
+        );
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return $response;
     }
 }

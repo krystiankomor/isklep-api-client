@@ -2,6 +2,7 @@
 
 namespace ISklepApiClient\Services\ApiClient;
 
+use ISklepApiClient\Dto\Producer;
 use ISklepApiClient\Factories\Producer\ProducerFactoryInterface;
 use ISklepApiClient\Services\Curl\CurlServiceInterface;
 
@@ -29,5 +30,17 @@ class ApiClientService implements ApiClientServiceInterface
             },
             json_decode($response, true)
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function postProducer(Producer $producer): void
+    {
+        $data = ['producer' => $producer];
+
+        $response = $this->curlService->makePostRequest('/shop_api/v1/producers', $data);
+
+        var_dump($response);
     }
 }
