@@ -2,10 +2,10 @@
 
 namespace ISklepApiClient\Factories\ApiClient;
 
+use ISklepApiClient\Factories\Producer\ProducerFactory;
 use ISklepApiClient\Services\ApiClient\ApiClientService;
 use ISklepApiClient\Services\ApiClient\ApiClientServiceInterface;
 use ISklepApiClient\Services\Curl\CurlService;
-use ISklepApiClient\Services\Mapper\MapperService;
 
 class ApiClientFactory implements ApiClientFactoryInterface
 {
@@ -20,6 +20,6 @@ class ApiClientFactory implements ApiClientFactoryInterface
     ): ApiClientServiceInterface {
         $curlService = new CurlService($url, $login, $password, $headerHost);
 
-        return new ApiClientService($curlService, new MapperService());
+        return new ApiClientService($curlService, new ProducerFactory());
     }
 }

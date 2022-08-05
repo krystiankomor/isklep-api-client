@@ -1,11 +1,11 @@
 <?php
 
-namespace Services\Mapper;
+namespace Factories\Producer;
 
-use ISklepApiClient\Services\Mapper\MapperService;
+use ISklepApiClient\Factories\Producer\ProducerFactory;
 use PHPUnit\Framework\TestCase;
 
-class MapperServiceTest extends TestCase
+class ProducerFactoryTest extends TestCase
 {
     public function testCreateProducerFromArray(): void
     {
@@ -18,10 +18,10 @@ class MapperServiceTest extends TestCase
             'ordering' => 1234,
             'source_id' => 422,
         ];
-        $service = new MapperService();
+        $service = new ProducerFactory();
 
         // Act
-        $result = $service->createProducerFromArray($data);
+        $result = $service->create($data);
 
         // Assert
         $this->assertEquals($data['id'], $result->getId());
@@ -36,10 +36,10 @@ class MapperServiceTest extends TestCase
     {
         // Arrange
         $data = [];
-        $service = new MapperService();
+        $service = new ProducerFactory();
 
         // Act
-        $result = $service->createProducerFromArray($data);
+        $result = $service->create($data);
 
         // Assert
         $this->assertNull($result->getId());

@@ -2,18 +2,18 @@
 
 namespace ISklepApiClient\Services\ApiClient;
 
+use ISklepApiClient\Factories\Producer\ProducerFactoryInterface;
 use ISklepApiClient\Services\Curl\CurlServiceInterface;
-use ISklepApiClient\Services\Mapper\MapperServiceInterface;
 
 class ApiClientService implements ApiClientServiceInterface
 {
     private CurlServiceInterface $curlService;
-    private MapperServiceInterface  $mapperService;
+    private ProducerFactoryInterface  $producerFactory;
 
-    public function __construct(CurlServiceInterface $curlService, MapperServiceInterface $mapperService)
+    public function __construct(CurlServiceInterface $curlService, ProducerFactoryInterface $producerFactory)
     {
         $this->curlService = $curlService;
-        $this->mapperService = $mapperService;
+        $this->producerFactory = $producerFactory;
     }
 
     /**
@@ -25,7 +25,7 @@ class ApiClientService implements ApiClientServiceInterface
 
         return array_map(
             function (array $data) {
-                return $this->mapperService->createProducerFromArray($data);
+                return $this->producerFactory->create($data);
             },
             json_decode($response, true)
         );

@@ -3,9 +3,9 @@
 namespace Services\ApiClient;
 
 use ISklepApiClient\Dto\Producer;
+use ISklepApiClient\Factories\Producer\ProducerFactoryInterface;
 use ISklepApiClient\Services\ApiClient\ApiClientService;
 use ISklepApiClient\Services\Curl\CurlServiceInterface;
-use ISklepApiClient\Services\Mapper\MapperServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class ApiClientServiceTest extends TestCase
@@ -23,10 +23,10 @@ class ApiClientServiceTest extends TestCase
             ->with('/shop_api/v1/producers')
             ->willReturn($json);
 
-        $mapperService = $this->createMock(MapperServiceInterface::class);
+        $mapperService = $this->createMock(ProducerFactoryInterface::class);
         $mapperService
             ->expects($this->exactly(2))
-            ->method('createProducerFromArray')
+            ->method('create')
             ->with([])
             ->willReturn($producer);
 
@@ -43,11 +43,11 @@ class ApiClientServiceTest extends TestCase
 
     private function getService(
         CurlServiceInterface $curlService = null,
-        MapperServiceInterface $mapperService = null
+        ProducerFactoryInterface $producerFactory = null
     ): ApiClientService {
         return new ApiClientService(
             $curlService ?? $this->createMock(CurlServiceInterface::class),
-            $mapperService ?? $this->createMock(MapperServiceInterface::class)
+            $producerFactory ?? $this->createMock(ProducerFactoryInterface::class)
         );
     }
 }

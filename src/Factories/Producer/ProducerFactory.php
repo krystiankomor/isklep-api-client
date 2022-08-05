@@ -1,15 +1,15 @@
 <?php
 
-namespace ISklepApiClient\Services\Mapper;
+namespace ISklepApiClient\Factories\Producer;
 
 use ISklepApiClient\Dto\Producer;
 
-class MapperService implements MapperServiceInterface
+class ProducerFactory implements ProducerFactoryInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function createProducerFromArray(array $data): Producer
+    public function create(array $data): Producer
     {
         return (new Producer())
             ->setId($data['id'] ?? null)
