@@ -3,7 +3,7 @@ Composer library to handle API integration with i-sklep service.
 
 ## Usage
 
-```injectablephp
+```php
 use ISklepApiClient\Dto\Producer;
 use ISklepApiClient\Factory\ProducerApiClient\ProducerApiClientFactory;
 
