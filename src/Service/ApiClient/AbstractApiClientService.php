@@ -3,13 +3,13 @@
 namespace ISklepApiClient\Service\ApiClient;
 
 use ISklepApiClient\Enum\RequestTypeEnum;
-use ISklepApiClient\Exception\HttpResponseException;
+use ISklepApiClient\Exception\CurlResponseException;
 use ISklepApiClient\Message\Response;
 use ISklepApiClient\Service\Curl\CurlServiceInterface;
 
 abstract class AbstractApiClientService
 {
-    protected CurlServiceInterface $curlService;
+    private CurlServiceInterface $curlService;
 
     public function __construct(CurlServiceInterface $curlService)
     {
@@ -21,9 +21,9 @@ abstract class AbstractApiClientService
      *
      * @return Response
      *
-     * @throws HttpResponseException
+     * @throws CurlResponseException
      */
-    protected function makeGetRequest(string $path): Response
+    public function makeGetRequest(string $path): Response
     {
         return $this->makeRequest($path, RequestTypeEnum::GET);
     }
@@ -34,9 +34,9 @@ abstract class AbstractApiClientService
      *
      * @return Response
      *
-     * @throws HttpResponseException
+     * @throws CurlResponseException
      */
-    protected function makePostRequest(string $path, array $data): Response
+    public function makePostRequest(string $path, array $data): Response
     {
         return $this->makeRequest($path, RequestTypeEnum::POST, $data);
     }
@@ -48,14 +48,14 @@ abstract class AbstractApiClientService
      *
      * @return Response
      *
-     * @throws HttpResponseException
+     * @throws CurlResponseException
      */
     private function makeRequest(string $path, string $type, ?array $data = null): Response
     {
         $response = $this->curlService->makeRequest($path, $type, $data);
 
         if (!$response->isSuccessfulCode()) {
-            throw new HttpResponseException($response);
+            throw new CurlResponseException($response);
         }
 
         return $response;

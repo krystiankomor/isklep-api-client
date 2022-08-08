@@ -3,14 +3,14 @@
 namespace ISklepApiClient\Service\ApiClient;
 
 use ISklepApiClient\Dto\Producer;
-use ISklepApiClient\Exception\HttpResponseException;
+use ISklepApiClient\Exception\CurlResponseException;
 
 interface ProducerApiClientServiceInterface
 {
     /**
      * @return Producer[]
      *
-     * @throws HttpResponseException
+     * @throws CurlResponseException
      */
     public function getAllProducers(): array;
 
@@ -19,7 +19,7 @@ interface ProducerApiClientServiceInterface
      *
      * @return void
      *
-     * @throws HttpResponseException
+     * @throws CurlResponseException
      */
     public function postProducer(Producer $producer): void;
 }

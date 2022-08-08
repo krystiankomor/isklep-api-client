@@ -1,10 +1,10 @@
 <?php
 
-namespace ISklepApiClient\Factory\ApiClient;
+namespace ISklepApiClient\Factory\ProducerApiClient;
 
 use ISklepApiClient\Service\ApiClient\ProducerApiClientServiceInterface;
 
-interface ApiClientFactoryInterface
+interface ProducerApiClientFactoryInterface
 {
     /**
      * @param string $url

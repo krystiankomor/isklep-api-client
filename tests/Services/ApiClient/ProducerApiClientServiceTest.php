@@ -9,7 +9,7 @@ use ISklepApiClient\Service\ApiClient\ProducerApiClientService;
 use ISklepApiClient\Service\Curl\CurlServiceInterface;
 use PHPUnit\Framework\TestCase;
 
-class ApiClientServiceTest extends TestCase
+class ProducerApiClientServiceTest extends TestCase
 {
     public function testGetAllProducers(): void
     {
@@ -43,17 +43,38 @@ class ApiClientServiceTest extends TestCase
         }
     }
 
+    public function testPostProducer(): void
+    {
+        // Arrange
+        $json = '[{}, {}]';
+        $response = $this->createResponse($json);
+        $producer = new Producer();
+
+        $curlService = $this->createMock(CurlServiceInterface::class);
+        $curlService
+            ->expects($this->once())
+            ->method('makeRequest')
+            ->with('/shop_api/v1/producers', 'POST', ['producer' => $producer])
+            ->willReturn($response);
+
+        $service = $this->getService($curlService);
+
+        // Act
+        $service->postProducer($producer);
+    }
+
     /**
      * @param string $body
+     * @param int|null $responseCode
      *
      * @return Response
      */
-    private function createResponse(string $body): Response
+    private function createResponse(string $body, ?int $responseCode = null): Response
     {
         return new Response(
             $body,
             [
-                'http_code' => 200,
+                'http_code' => $responseCode ?? 200,
             ],
             '',
             0

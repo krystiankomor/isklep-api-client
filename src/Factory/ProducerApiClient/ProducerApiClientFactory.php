@@ -1,13 +1,13 @@
 <?php
 
-namespace ISklepApiClient\Factory\ApiClient;
+namespace ISklepApiClient\Factory\ProducerApiClient;
 
 use ISklepApiClient\Factory\Producer\ProducerFactory;
 use ISklepApiClient\Service\ApiClient\ProducerApiClientService;
 use ISklepApiClient\Service\ApiClient\ProducerApiClientServiceInterface;
 use ISklepApiClient\Service\Curl\CurlService;
 
-class ApiClientFactory implements ApiClientFactoryInterface
+class ProducerApiClientFactory implements ProducerApiClientFactoryInterface
 {
     /**
      * {@inheritDoc}

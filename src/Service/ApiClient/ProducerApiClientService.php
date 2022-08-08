@@ -37,8 +37,6 @@ class ProducerApiClientService extends AbstractApiClientService implements Produ
      */
     public function postProducer(Producer $producer): void
     {
-        $data = ['producer' => $producer];
-
-        $this->makePostRequest('/shop_api/v1/producers', $data);
+        $this->makePostRequest('/shop_api/v1/producers', ['producer' => $producer]);
     }
 }

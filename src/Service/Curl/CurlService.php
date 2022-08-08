@@ -29,7 +29,9 @@ class CurlService implements CurlServiceInterface
         $curl = curl_init();
         curl_setopt_array($curl, $curlOptions);
 
+        /** @var string|null $return due to CURLOPT_RETURNTRANSFER = true */
         $return = curl_exec($curl);
+
         $info = curl_getinfo($curl);
         $errors = curl_error($curl);
         $errno = curl_errno($curl);
@@ -46,10 +48,10 @@ class CurlService implements CurlServiceInterface
      *
      * @return mixed[]
      */
-    private function getCurlOptions(string $path, string $type, ?array $data): array
+    public function getCurlOptions(string $path, string $type, ?array $data): array
     {
         $curlOptions = [
-            CURLOPT_URL            => $this->url . $path,
+            CURLOPT_URL            => trim($this->url, '/') . $path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING       => '',
             CURLOPT_MAXREDIRS      => 10,
@@ -71,7 +73,7 @@ class CurlService implements CurlServiceInterface
     /**
      * @return string[]
      */
-    private function getHeaders(): array
+    public function getHeaders(): array
     {
         $loginPassword = vsprintf(
             '%s:%s',
